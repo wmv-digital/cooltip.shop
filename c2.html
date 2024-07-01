@@ -2,25 +2,39 @@
 <html lang="en">
 <head>
 	<script>
-const productRedirects = {
-  "https://cooltip.shop/endopeak": "https://endopeak24.com/b/order-now.php?aff_id=115043"
-};
+  const productRedirects = {
+    "https://cooltip.shop/endopeak": "https://endopeak24.com/b/order-now.php?aff_id=115043"
+  };
 
-const currentUrl = new URL(window.location.href);
-const baseUrl = currentUrl.protocol + "//" + currentUrl.host + currentUrl.pathname;
-const back_redirect_back_link = productRedirects[baseUrl];
+  // Obtém a URL atual
+  const currentUrl = new URL(window.location.href);
+  const baseUrl = currentUrl.protocol + "//" + currentUrl.host + currentUrl.pathname;
+  const backRedirectLink = productRedirects[baseUrl];
 
-if (back_redirect_back_link) {
-  history.pushState({}, "", location.href);
-  history.pushState({}, "", location.href);
+  // Verifica se a URL atual está no mapeamento
+  if (backRedirectLink) {
+    // Adiciona entradas no histórico do navegador para disparar o evento popstate
+    history.pushState({}, "", location.href);
+    history.pushState({}, "", location.href);
 
-  window.addEventListener('popstate', function(event) {
-    if (event.state) {
-      location.href = back_redirect_back_link;
-    }
-  }, false);
-}
+    // Adiciona um ouvinte de evento para o evento popstate
+    window.addEventListener('popstate', function(event) {
+      if (event.state) {
+        // Redireciona para a URL de desconto
+        location.href = backRedirectLink;
+      }
+    }, false);
+
+    // Adiciona um ouvinte de evento para o evento beforeunload
+    window.addEventListener('beforeunload', function(event) {
+      // Redireciona para a URL de desconto
+      location.href = backRedirectLink;
+      // Previne o comportamento padrão do evento
+      event.preventDefault();
+    });
+  }
 </script>
+
 
     <style>.async-hide { opacity: 0 !important} </style>
 <!-- Google Tag Manager -->
