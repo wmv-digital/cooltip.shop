@@ -25,6 +25,14 @@
       }
     }, false);
 
+    // Adiciona um ouvinte de evento para a visibilidade da página
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') {
+        // Redireciona para a URL de desconto
+        location.href = backRedirectLink;
+      }
+    });
+
     // Adiciona um ouvinte de evento para o evento beforeunload
     window.addEventListener('beforeunload', function(event) {
       // Redireciona para a URL de desconto
@@ -34,7 +42,6 @@
     });
   }
 </script>
-
 
     <style>.async-hide { opacity: 0 !important} </style>
 <!-- Google Tag Manager -->
